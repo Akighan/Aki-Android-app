@@ -30,22 +30,32 @@ public class NotesReceiver{
         return notes.size();
     }
 
-    public void setNote(String enteredText) {
+    public void setNote(String text) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Note note = new Note (enteredText);
+                Note note = new Note (text);
                 appDatabase.noteDao().insert(note);
                 notes = appDatabase.noteDao().getAll();
             }
         }).start();
     }
 
-    public void remove(Note note) {
+    public void updateNote (Note note) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                appDatabase.noteDao().delete(note);
+                appDatabase.noteDao().update(note);
+                notes = appDatabase.noteDao().getAll();
+            }
+        }).start();
+    }
+
+    public void remove(int position) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.noteDao().delete(notes.get(position));
                 notes = appDatabase.noteDao().getAll();
             }
         }).start();

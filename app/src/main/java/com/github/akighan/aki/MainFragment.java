@@ -2,12 +2,14 @@ package com.github.akighan.aki;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.MediaRouter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -51,41 +53,14 @@ public class MainFragment extends Fragment {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_notes);
-        ListOfNotesAdapter.NotesAdapterOnClickListener onClickListener = new ListOfNotesAdapter.NotesAdapterOnClickListener() {
-            @Override
-            public void onNoteAdapterClickListener(Note note, int position, ListOfNotesAdapter adapter) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
-                final String [] choice = {"Удалить"};
-                builder.setTitle("Доступные действия:")
-                        .setItems(choice, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0: {
-                                        notesReceiver.remove(note);
-                                        adapter.notifyDataSetChanged();
-                                        new Thread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    server.sendData();
-                                                    server.closeConnection();
-                                                } catch (Exception e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }).start();
-                                    }
-                                }
 
-
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        };
-        ListOfNotesAdapter adapter = new ListOfNotesAdapter(rootView.getContext(), notesReceiver, onClickListener);
+        ListOfNotesAdapter adapter = new ListOfNotesAdapter(rootView.getContext(), notesReceiver);
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper.Callback callback =
+                new RVTouchHelper(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
 
         return rootView;
     }

@@ -2,9 +2,19 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainFragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/menuTitleTextColor"
+    android:clickable="false"
     tools:context=".MainFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_background" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notes"
@@ -16,10 +26,11 @@
 
     <ImageView
         android:id="@+id/iv_plus_button"
-        android:layout_width="49dp"
-        android:layout_height="49dp"
+        android:layout_width="84dp"
+        android:layout_height="76dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
+        android:alpha="0.9"
         app:srcCompat="@drawable/ic_plus_button"
         app:tint="@color/addNoteIcon" />
 

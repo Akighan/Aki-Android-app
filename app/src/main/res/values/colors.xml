@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="menuTitleTextColor">#FFFFFF</color>
     <color name="addNoteIcon">#FFC107</color>
+    <color name="backgroundTextColor">#213749</color>
+    <color name="mainFragmentBackground">#999562</color>
+    <color name="recyclerViewElement">#68A373</color>
+
+
 </resources>

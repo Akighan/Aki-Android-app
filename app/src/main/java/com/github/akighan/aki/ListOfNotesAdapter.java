@@ -1,9 +1,13 @@
 package com.github.akighan.aki;
 
 import android.content.Context;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,18 +15,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.akighan.aki.database.NotesReceiver;
 
-public class ListOfNotesAdapter extends RecyclerView.Adapter <ListOfNotesAdapter.ViewHolder> {
+import java.util.Collections;
+
+public class ListOfNotesAdapter
+        extends RecyclerView.Adapter<ListOfNotesAdapter.ViewHolder>
+        implements RecyclerViewTouch {
 
     private final LayoutInflater inflater;
     private final NotesReceiver notesReceiver;
-    private final NotesAdapterOnClickListener onClickListener;
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(notesReceiver.getNotes(), i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(notesReceiver.getNotes(), i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        notesReceiver.remove(position);
+        notifyItemRemoved(position);
+    }
 
     interface NotesAdapterOnClickListener {
         void onNoteAdapterClickListener(Note note, int position, ListOfNotesAdapter onClickListener);
     }
 
-    public ListOfNotesAdapter(Context context,NotesReceiver notesReceiver, NotesAdapterOnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    public ListOfNotesAdapter(Context context, NotesReceiver notesReceiver) {
         this.inflater = LayoutInflater.from(context);
         this.notesReceiver = notesReceiver;
     }
@@ -30,7 +56,7 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter <ListOfNotesAdapter
     @NonNull
     @Override
     public ListOfNotesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.rv_list_of_notes,parent,false);
+        View view = inflater.inflate(R.layout.rv_list_of_notes, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -38,26 +64,36 @@ public class ListOfNotesAdapter extends RecyclerView.Adapter <ListOfNotesAdapter
     @Override
     public void onBindViewHolder(@NonNull ListOfNotesAdapter.ViewHolder holder, int position) {
 
-        Note note  = notesReceiver.get(position);
+        Note note = notesReceiver.get(position);
         holder.note.setText(note.getNote());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        EditText text = holder.note.findViewById(R.id.rv_text);
+        text.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
-            public void onClick(View v) {
-                onClickListener.onNoteAdapterClickListener(note, position, ListOfNotesAdapter.this);
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    InputMethodManager methodManager = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    methodManager.hideSoftInputFromWindow(text.getWindowToken(),0);
+                    v.clearFocus();
+                    note.setNote(text.getText().toString());
+                    notesReceiver.updateNote(note);
+                }
+                return true;
             }
         });
     }
 
+
     @Override
     public int getItemCount() {
-       return notesReceiver.size();
+        return notesReceiver.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView note;
-        ViewHolder (View view) {
+        final EditText note;
+
+        ViewHolder(View view) {
             super(view);
-            note = (TextView)view.findViewById(R.id.rv_text);
+            note = (EditText) view.findViewById(R.id.rv_text);
         }
     }
 }
