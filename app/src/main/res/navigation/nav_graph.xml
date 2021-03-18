@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -31,4 +34,13 @@
         android:name="com.github.akighan.aki.SettingsFragment"
         android:label="Настройки"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.github.akighan.aki.EditNoteFragment"
+        android:label="Изменить заметку"
+        tools:layout="@layout/fragment_edit_note">
+        <action
+            android:id="@+id/action_editNoteFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

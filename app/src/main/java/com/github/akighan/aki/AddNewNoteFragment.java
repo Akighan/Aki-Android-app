@@ -89,8 +89,6 @@ public class AddNewNoteFragment extends Fragment {
                        }
                    }
                }).start();
-
-
             }
             NavHostFragment.findNavController(AddNewNoteFragment.this).navigate(R.id.action_newNoteFragment_to_mainFragment);
         }

@@ -26,7 +26,7 @@ import com.github.akighan.aki.database.NotesReceiver;
 import com.github.akighan.aki.server.LaptopServer;
 
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements RVClickListener {
     NotesReceiver notesReceiver = NotesReceiver.getInstance();
     LaptopServer server = new LaptopServer();
 
@@ -53,17 +53,17 @@ public class MainFragment extends Fragment {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_notes);
-
-        ListOfNotesAdapter adapter = new ListOfNotesAdapter(rootView.getContext(), notesReceiver);
+        RVClickListener rvClickListener = this;
+        ListOfNotesAdapter adapter = new ListOfNotesAdapter(rootView.getContext(), notesReceiver, rvClickListener);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback =
                 new RVTouchHelper(adapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
-
         return rootView;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -89,5 +89,13 @@ public class MainFragment extends Fragment {
             NavHostFragment.findNavController(MainFragment.this).navigate(R.id.action_mainFragment_to_settingsFragment);
         }
         return true;
+    }
+
+    @Override
+    public void onClick(int position) {
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        NavHostFragment.findNavController(MainFragment.this).navigate(R.id.action_mainFragment_to_editNoteFragment, bundle);
     }
 }

@@ -22,6 +22,7 @@ public class RVTouchHelper extends ItemTouchHelper.Callback {
         listOfNotesAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 
+
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;

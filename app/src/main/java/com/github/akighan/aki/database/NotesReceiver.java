@@ -3,6 +3,7 @@ package com.github.akighan.aki.database;
 import com.github.akighan.aki.Note;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NotesReceiver{
@@ -30,11 +31,25 @@ public class NotesReceiver{
         return notes.size();
     }
 
+    public void updateDBFromReceiver () {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                appDatabase.noteDao().deleteTable();
+                for (int i =0; i< notes.size(); i++) {
+                    Note note = new Note(notes.get(i).getNote());
+                    appDatabase.noteDao().insert(note);
+                }
+            }
+        }).start();
+
+    }
+
     public void setNote(String text) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Note note = new Note (text);
+                Note note = new Note (text.trim());
                 appDatabase.noteDao().insert(note);
                 notes = appDatabase.noteDao().getAll();
             }

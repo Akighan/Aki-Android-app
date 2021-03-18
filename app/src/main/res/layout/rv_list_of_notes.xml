@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:focusable="true">
 
-    <EditText
+    <TextView
         android:id="@+id/rv_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,9 +20,7 @@
         android:focusable="true"
         android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:imeOptions="actionDone"
-        android:inputType="textPersonName" />
+        android:textSize="20sp"/>
 
 
 </LinearLayout>

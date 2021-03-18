@@ -15,6 +15,9 @@ public interface NoteDao {
     @Query("SELECT * FROM note WHERE id = :id")
     Note getById (long id);
 
+    @Query("DELETE FROM note")
+    void deleteTable ();
+
     @Insert
     void insert (Note note);
 
