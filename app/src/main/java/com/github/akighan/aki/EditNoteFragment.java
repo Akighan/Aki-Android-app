@@ -17,7 +17,6 @@ import com.github.akighan.aki.server.LaptopServer;
 public class EditNoteFragment extends Fragment {
     private int position;
     private NotesReceiver notesReceiver;
-    LaptopServer server = new LaptopServer();
 
 
     public EditNoteFragment() {
@@ -43,21 +42,10 @@ public class EditNoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.clearFocus();
-                String enteredText = editText.getText().toString();
+                String enteredText = editText.getText().toString().trim();
                 if (!enteredText.equals("")) {
-                    note.setNote(enteredText.trim());
-                    //notesReceiver.updateNote(note);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                server.sendData();
-                                server.closeConnection();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
+                    note.setNote(enteredText);
+                    notesReceiver.updateNote(position, note);
                 }
                 NavHostFragment.findNavController(EditNoteFragment.this).navigate(R.id.action_editNoteFragment_to_mainFragment);
             }

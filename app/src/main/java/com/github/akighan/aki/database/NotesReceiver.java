@@ -46,34 +46,37 @@ public class NotesReceiver{
     }
 
     public void setNote(String text) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Note note = new Note (text.trim());
-                appDatabase.noteDao().insert(note);
-                notes = appDatabase.noteDao().getAll();
-            }
-        }).start();
+        notesReceiver.notes.add(new Note(text));
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Note note = new Note (text.trim());
+//                appDatabase.noteDao().insert(note);
+//                notes = appDatabase.noteDao().getAll();
+//            }
+//        }).start();
     }
 
-    public void updateNote (Note note) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                appDatabase.noteDao().update(note);
-                notes = appDatabase.noteDao().getAll();
-            }
-        }).start();
+    public void updateNote (int position, Note note) {
+        notes.set(position,note);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                appDatabase.noteDao().update(note);
+//                notes = appDatabase.noteDao().getAll();
+//            }
+//        }).start();
     }
 
     public void remove(int position) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                appDatabase.noteDao().delete(notes.get(position));
-                notes = appDatabase.noteDao().getAll();
-            }
-        }).start();
+        notes.remove(position);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                appDatabase.noteDao().delete(notes.get(position));
+//                notes = appDatabase.noteDao().getAll();
+//            }
+//        }).start();
     }
 
     public List <Note> getNotes () throws NullPointerException {
