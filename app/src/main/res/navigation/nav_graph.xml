@@ -9,7 +9,7 @@
         android:id="@+id/mainFragment"
         android:name="com.github.akighan.aki.MainFragment"
         android:label="Мои заметки"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_addNewNoteFragment"
             app:destination="@id/newNoteFragment"
@@ -29,7 +29,9 @@
         tools:layout="@layout/fragment_add_new_note" >
         <action
             android:id="@+id/action_newNoteFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -43,6 +45,8 @@
         tools:layout="@layout/fragment_edit_note">
         <action
             android:id="@+id/action_editNoteFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>
