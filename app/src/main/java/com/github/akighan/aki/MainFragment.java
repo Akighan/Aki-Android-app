@@ -2,7 +2,9 @@ package com.github.akighan.aki;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaRouter;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -73,6 +75,16 @@ public class MainFragment extends Fragment implements RVClickListener {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(MainFragment.this).navigate(R.id.action_mainFragment_to_addNewNoteFragment);
+            }
+        });
+
+
+        view.findViewById(R.id.mf_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/AkighanBot?start"));
+                startActivity(browserIntent);
             }
         });
     }
