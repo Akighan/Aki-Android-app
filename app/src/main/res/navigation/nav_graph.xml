@@ -51,7 +51,11 @@
         android:id="@+id/settingsFragment"
         android:name="com.github.akighan.aki.SettingsFragment"
         android:label="Настройки"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/editNoteFragment"
         android:name="com.github.akighan.aki.EditNoteFragment"

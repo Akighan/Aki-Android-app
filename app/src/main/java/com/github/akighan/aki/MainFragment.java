@@ -30,7 +30,6 @@ import com.github.akighan.aki.server.LaptopServer;
 
 public class MainFragment extends Fragment implements RVClickListener {
     NotesReceiver notesReceiver = NotesReceiver.getInstance();
-    LaptopServer server = new LaptopServer();
 
 
     public MainFragment() {
@@ -74,16 +73,6 @@ public class MainFragment extends Fragment implements RVClickListener {
             @Override
             public void onClick(View v) {
                 NavHostFragment.findNavController(MainFragment.this).navigate(R.id.action_mainFragment_to_addNewNoteFragment);
-            }
-        });
-
-
-        view.findViewById(R.id.mf_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/AkighanBot?start"));
-                startActivity(browserIntent);
             }
         });
     }

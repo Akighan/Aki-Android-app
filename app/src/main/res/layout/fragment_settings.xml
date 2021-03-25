@@ -5,10 +5,65 @@
     android:layout_height="match_parent"
     tools:context=".SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_background" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            android:background="@color/menuTitleTextColor">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="292dp"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                android:padding="20dp"
+                android:text="Телеграм-ассистент"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/telegram_on_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|end"
+                android:padding="10dp"
+                android:shadowColor="@color/backgroundTextColor"
+                android:visibility="visible"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/tv_set_identificator"
+            android:layout_width="match_parent"
+            android:layout_height="142dp"
+            android:layout_margin="20dp"
+            android:background="@color/menuTitleTextColor"
+            android:clickable="true"
+            android:ems="10"
+            android:hint="@string/add_key_for_telegram"
+            android:inputType="textPersonName"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/save_identificator_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Сохранить" />
+
+    </LinearLayout>
 
 </FrameLayout>

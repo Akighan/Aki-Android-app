@@ -33,11 +33,4 @@
         app:srcCompat="@drawable/ic_plus_button"
         app:tint="@color/addNoteIcon" />
 
-    <Button
-        android:id="@+id/mf_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="Button" />
-
 </FrameLayout>

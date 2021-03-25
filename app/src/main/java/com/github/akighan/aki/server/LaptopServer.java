@@ -7,6 +7,7 @@ import com.github.akighan.aki.MainActivity;
 import com.github.akighan.aki.MainFragment;
 import com.github.akighan.aki.Note;
 import com.github.akighan.aki.database.DBSingleton;
+import com.github.akighan.aki.database.NotesReceiver;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -18,6 +19,7 @@ public class LaptopServer {
     private int mServerPort = 6789;
     private Socket mSocket = null;
     private DBSingleton dbSingleton = DBSingleton.getInstance();
+    private static String personId;
 
     public LaptopServer() {  }
 
@@ -43,6 +45,14 @@ public class LaptopServer {
         mSocket = null;
     }
 
+    public static String getPersonId() {
+        return personId;
+    }
+
+    public static void setPersonId(String mPersonId) {
+        personId = mPersonId;
+    }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
@@ -56,8 +66,9 @@ public class LaptopServer {
         }
 
         try {
-            List<Note> sendList = dbSingleton.getDatabase().noteDao().getAll();
+            List<Note> sendList = NotesReceiver.getInstance().getNotes();
             StringBuilder packedCollection = new StringBuilder();
+            packedCollection.append(personId).append('\t');
             for (int i = 0; i<sendList.size();i++) {
                 packedCollection.append(sendList.get(i).getNote()).append('\t');
             }
