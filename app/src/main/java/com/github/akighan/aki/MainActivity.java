@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,13 +50,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onPause() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    server.sendData();
+                    final String ANDROID_ID = Settings.Secure
+                            .getString(MainActivity.this.getApplicationContext().getContentResolver(),
+                                    Settings.Secure.ANDROID_ID);
+                    server.sendData(ANDROID_ID);
                     server.closeConnection();
                 } catch (Exception e) {
                     e.printStackTrace();

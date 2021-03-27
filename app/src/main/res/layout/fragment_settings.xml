@@ -45,25 +45,6 @@
 
         </FrameLayout>
 
-        <EditText
-            android:id="@+id/tv_set_identificator"
-            android:layout_width="match_parent"
-            android:layout_height="142dp"
-            android:layout_margin="20dp"
-            android:background="@color/menuTitleTextColor"
-            android:clickable="true"
-            android:ems="10"
-            android:hint="@string/add_key_for_telegram"
-            android:inputType="textPersonName"
-            android:textAlignment="center" />
-
-        <Button
-            android:id="@+id/save_identificator_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Сохранить" />
-
     </LinearLayout>
 
 </FrameLayout>

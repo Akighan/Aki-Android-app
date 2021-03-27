@@ -1,5 +1,6 @@
 package com.github.akighan.aki.server;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,13 +16,13 @@ import java.util.List;
 
 public class LaptopServer {
     private static final String LOG_TAG = "Aki";
-    private String mServerName = "192.168.1.71";
+    private String mServerName = "192.168.1.46";
     private int mServerPort = 6789;
     private Socket mSocket = null;
     private DBSingleton dbSingleton = DBSingleton.getInstance();
-    private static String personId;
 
-    public LaptopServer() {  }
+    public LaptopServer() {
+    }
 
     public void openConnection () throws Exception {
         closeConnection();
@@ -45,21 +46,13 @@ public class LaptopServer {
         mSocket = null;
     }
 
-    public static String getPersonId() {
-        return personId;
-    }
-
-    public static void setPersonId(String mPersonId) {
-        personId = mPersonId;
-    }
-
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
         closeConnection();
     }
 
-    public void sendData () throws Exception {
+    public void sendData (String clientId) throws Exception {
         openConnection();
         if (mSocket == null || mSocket.isClosed()) {
             throw new Exception("Невозможно отправить данные. Сокет не создан или закрыт");
@@ -68,9 +61,9 @@ public class LaptopServer {
         try {
             List<Note> sendList = NotesReceiver.getInstance().getNotes();
             StringBuilder packedCollection = new StringBuilder();
-            packedCollection.append(personId).append('\t');
+            packedCollection.append(clientId).append('\n');
             for (int i = 0; i<sendList.size();i++) {
-                packedCollection.append(sendList.get(i).getNote()).append('\t');
+                packedCollection.append(sendList.get(i).getNote()).append('\n');
             }
             mSocket.getOutputStream().write(packedCollection.toString().getBytes());
             mSocket.getOutputStream().flush();

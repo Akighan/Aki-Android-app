@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.akighan.aki.server.LaptopServer;
 
@@ -48,24 +50,13 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    final String ANDROID_ID = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                    Toast.makeText (getContext(),ANDROID_ID,Toast.LENGTH_SHORT).show();
                     Intent browserIntent = new
-                            Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/AkighanBot?start"));
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/AkighanBot?start="+ANDROID_ID));
                     startActivity(browserIntent);
                 }
             }
-        });
-        view.findViewById(R.id.save_identificator_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editText = view.findViewById(R.id.tv_set_identificator);
-                String personId;
-                if (!(personId = editText.getText().toString()).isEmpty()) {
-                    LaptopServer.setPersonId(personId);
-                    editText.clearFocus();
-                    NavHostFragment.findNavController(SettingsFragment.this).navigate(R.id.action_settingsFragment_to_mainFragment);
-                }
-            }
-
         });
     }
 
