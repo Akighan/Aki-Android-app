@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
-        Toast.makeText(this, "Saved in base", Toast.LENGTH_SHORT).show();
         NotesReceiver.getInstance().updateDBFromReceiver();
         super.onPause();
     }

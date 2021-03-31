@@ -51,7 +51,6 @@ public class SettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     final String ANDROID_ID = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-                    Toast.makeText (getContext(),ANDROID_ID,Toast.LENGTH_SHORT).show();
                     Intent browserIntent = new
                             Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/AkighanBot?start="+ANDROID_ID));
                     startActivity(browserIntent);

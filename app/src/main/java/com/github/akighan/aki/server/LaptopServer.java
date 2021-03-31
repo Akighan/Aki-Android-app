@@ -16,7 +16,7 @@ import java.util.List;
 
 public class LaptopServer {
     private static final String LOG_TAG = "Aki";
-    private String mServerName = "192.168.1.46";
+    private String mServerName = "192.168.1.44";
     private int mServerPort = 6789;
     private Socket mSocket = null;
     private DBSingleton dbSingleton = DBSingleton.getInstance();
