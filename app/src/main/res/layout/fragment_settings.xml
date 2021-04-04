@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,18 +18,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:alpha="1"
-            android:background="@color/menuTitleTextColor">
+            android:background="@color/menuTitleTextColor"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="292dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
                 android:inputType="text"
-                android:padding="20dp"
                 android:text="Телеграм-ассистент"
                 android:textAlignment="center"
                 android:textSize="18sp" />
@@ -36,14 +40,69 @@
             <Switch
                 android:id="@+id/telegram_on_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center|end"
+                android:layout_weight="0"
                 android:padding="10dp"
                 android:shadowColor="@color/backgroundTextColor"
                 android:visibility="visible"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/weather_notification_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/menuTitleTextColor"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Уведомления о погоде"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/sw_weather_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|end"
+                android:layout_weight="0"
+                android:padding="10dp" />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/sp_choose_city"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@color/menuTitleTextColor"
+            android:entries="@array/cities"
+            android:gravity="center|center_horizontal"
+            android:paddingLeft="10dp"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/bt_save_changes"
+            android:layout_width="@dimen/settings_item_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@color/teal_200"
+            android:clickable="true"
+            android:enabled="false"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="Сохранить изменения"
+            android:visibility="invisible"
+            app:backgroundTint="@android:color/secondary_text_dark" />
 
     </LinearLayout>
 
