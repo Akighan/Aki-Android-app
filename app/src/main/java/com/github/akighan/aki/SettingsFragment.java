@@ -98,7 +98,7 @@ public class SettingsFragment extends Fragment {
         }
         else if (button.getId() == welcomeButton.getId()) {
             welcomeButton.setOnClickListener (view -> {
-                sharedPreferences.edit().putBoolean("hasVisited", true).apply();
+                sharedPreferences.edit().putBoolean("isClientThereFirstTime", false).apply();
                 Intent browserIntent = new
                         Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/AkighanBot?start=" + ANDROID_ID));
                 startActivity(browserIntent);
