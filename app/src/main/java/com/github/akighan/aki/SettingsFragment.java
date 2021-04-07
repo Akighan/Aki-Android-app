@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -19,14 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.akighan.aki.server.LaptopServer;
 
@@ -37,13 +32,16 @@ public class SettingsFragment extends Fragment {
     private boolean isClientThereFirstTime;
     private Switch telegramOnSwitch;
     private Switch weatherNotification;
+    private Switch newsNotification;
     private Spinner citySpinner;
     private Button saveButton;
     private Button welcomeButton;
     private LinearLayout weatherNotificationContainer;
+    private LinearLayout newsNotificationContainer;
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_TELEGRAM_ASSISTANT = "TELEGRAM_ASSISTANT";
     public static final String APP_WEATHER_NOTIFICATION = "WEATHER_NOTIFICATION";
+    public static final String APP_NEWS_NOTIFICATION = "NEWS_NOTIFICATION";
     public static final String APP_CITY_FOR_WEATHER = "CITY_FOR_WEATHER";
 
 
@@ -57,12 +55,18 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ANDROID_ID = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
+
         telegramOnSwitch = view.findViewById(R.id.telegram_on_button);
         weatherNotification = view.findViewById(R.id.sw_weather_notification);
+        newsNotification = view.findViewById(R.id.sw_news_notification);
         citySpinner = view.findViewById(R.id.sp_choose_city);
         weatherNotificationContainer = view.findViewById(R.id.weather_notification_layout);
+        newsNotificationContainer = view.findViewById(R.id.news_notification_layout);
+
         saveButton = view.findViewById(R.id.bt_save_changes);
         welcomeButton = view.findViewById(R.id.bt_equaint_with_telegram);
+
 
 
         loadPreferences();
@@ -78,6 +82,7 @@ public class SettingsFragment extends Fragment {
         onClickListener(welcomeButton);
         onClickListener(saveButton);
         onCheckedChangeListener(telegramOnSwitch);
+        onCheckedChangeListener(newsNotification);
         onCheckedChangeListener(weatherNotification);
         setOnItemSelectedListener(citySpinner);
 
@@ -95,9 +100,8 @@ public class SettingsFragment extends Fragment {
                 new Thread(() -> savePreferences(ANDROID_ID)).start();
                 NavHostFragment.findNavController(this).navigate(R.id.action_settingsFragment_to_mainFragment);
             });
-        }
-        else if (button.getId() == welcomeButton.getId()) {
-            welcomeButton.setOnClickListener (view -> {
+        } else if (button.getId() == welcomeButton.getId()) {
+            welcomeButton.setOnClickListener(view -> {
                 sharedPreferences.edit().putBoolean("isClientThereFirstTime", false).apply();
                 Intent browserIntent = new
                         Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/AkighanBot?start=" + ANDROID_ID));
@@ -109,12 +113,13 @@ public class SettingsFragment extends Fragment {
     private void savePreferences(String clientId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(APP_TELEGRAM_ASSISTANT, telegramOnSwitch.isChecked())
-        .putBoolean(APP_WEATHER_NOTIFICATION, weatherNotification.isChecked())
-        .putInt(APP_CITY_FOR_WEATHER,citySpinner.getSelectedItemPosition()).apply();
+                .putBoolean(APP_WEATHER_NOTIFICATION, weatherNotification.isChecked())
+                .putInt(APP_CITY_FOR_WEATHER, citySpinner.getSelectedItemPosition())
+                .putBoolean(APP_NEWS_NOTIFICATION, newsNotification.isChecked()).apply();
         LaptopServer laptopServer = new LaptopServer();
 
         try {
-            laptopServer.sendSettings(clientId,sharedPreferences);
+            laptopServer.sendSettings(clientId, sharedPreferences);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,11 +127,12 @@ public class SettingsFragment extends Fragment {
 
     private void setOnItemSelectedListener(Spinner citySpinner) {
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            int num =0; //this need to avoid SharedPreferences load
+            int num = 0; //this need to avoid SharedPreferences load
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 num++;
-                if (num>1) {
+                if (num > 1) {
                     activateSaveButton();
                 }
             }
@@ -143,12 +149,14 @@ public class SettingsFragment extends Fragment {
             sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 activateSaveButton();
                 if (isChecked) {
+                    newsNotificationContainer.setVisibility(View.VISIBLE);
                     weatherNotificationContainer.setVisibility(View.VISIBLE);
                     if (weatherNotification.isChecked()) {
                         citySpinner.setVisibility(View.VISIBLE);
                     }
                 } else {
                     weatherNotificationContainer.setVisibility(View.INVISIBLE);
+                    newsNotificationContainer.setVisibility(View.INVISIBLE);
                     citySpinner.setVisibility(View.INVISIBLE);
                 }
             });
@@ -159,12 +167,17 @@ public class SettingsFragment extends Fragment {
                     citySpinner.setVisibility(View.VISIBLE);
                 } else citySpinner.setVisibility(View.INVISIBLE);
             });
+        } else if (sw.getId() == newsNotification.getId()) {
+            sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                activateSaveButton();
+            });
         }
     }
 
     private void loadPreferences() {
         boolean isTelegramChecked;
         boolean isWeatherNotificationChecked = false;
+        boolean isNewsNotificationChecked = false;
         int cityChosen;
 
         sharedPreferences = SettingsFragment.this.getActivity()
@@ -173,6 +186,10 @@ public class SettingsFragment extends Fragment {
         isTelegramChecked = sharedPreferences.getBoolean(APP_TELEGRAM_ASSISTANT, false);
         telegramOnSwitch.setChecked(isTelegramChecked);
         if (isTelegramChecked) {
+            isNewsNotificationChecked = sharedPreferences.getBoolean(APP_NEWS_NOTIFICATION,false);
+            newsNotification.setChecked(isNewsNotificationChecked);
+            newsNotificationContainer.setVisibility(View.VISIBLE);
+
             isWeatherNotificationChecked = sharedPreferences.getBoolean(APP_WEATHER_NOTIFICATION, false);
             weatherNotification.setChecked(isWeatherNotificationChecked);
             weatherNotificationContainer.setVisibility(View.VISIBLE);

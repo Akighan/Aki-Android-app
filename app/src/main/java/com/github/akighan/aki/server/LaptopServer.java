@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.util.List;
 
 import static com.github.akighan.aki.SettingsFragment.APP_CITY_FOR_WEATHER;
+import static com.github.akighan.aki.SettingsFragment.APP_NEWS_NOTIFICATION;
 import static com.github.akighan.aki.SettingsFragment.APP_TELEGRAM_ASSISTANT;
 import static com.github.akighan.aki.SettingsFragment.APP_WEATHER_NOTIFICATION;
 
@@ -95,13 +96,14 @@ public class LaptopServer {
 
             boolean isTelegramChecked = sharedPreferences.getBoolean(APP_TELEGRAM_ASSISTANT, false);
             boolean isWeatherNotificationChecked = sharedPreferences.getBoolean(APP_WEATHER_NOTIFICATION, false);
+            boolean isNewsNotificationChecked = sharedPreferences.getBoolean(APP_NEWS_NOTIFICATION, false);
             int cityChosen = sharedPreferences.getInt(APP_CITY_FOR_WEATHER, 0);
-
             packedSettings.append(clientId).append('\n');
             packedSettings.append(SEND_SETTINGS_MODIFICATION).append('\n');
             packedSettings.append(isTelegramChecked).append('\n');
             packedSettings.append(isWeatherNotificationChecked).append('\n');
             packedSettings.append(cityChosen).append('\n');
+            packedSettings.append(isNewsNotificationChecked).append('\n');
 
             mSocket.getOutputStream().write(packedSettings.toString().getBytes());
             mSocket.getOutputStream().flush();
