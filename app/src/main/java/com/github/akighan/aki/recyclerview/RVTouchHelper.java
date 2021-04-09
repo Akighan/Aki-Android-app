@@ -1,8 +1,10 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.recyclerview;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.github.akighan.aki.notes.ListOfNotesAdapter;
 
 public class RVTouchHelper extends ItemTouchHelper.Callback {
     private final ListOfNotesAdapter listOfNotesAdapter;

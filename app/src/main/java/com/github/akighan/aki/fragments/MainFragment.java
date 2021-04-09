@@ -1,10 +1,5 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.media.MediaRouter;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,18 +9,18 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.github.akighan.aki.database.NotesReceiver;
-import com.github.akighan.aki.server.LaptopServer;
+import com.github.akighan.aki.notes.ListOfNotesAdapter;
+import com.github.akighan.aki.R;
+import com.github.akighan.aki.recyclerview.RVClickListener;
+import com.github.akighan.aki.recyclerview.RVTouchHelper;
+import com.github.akighan.aki.notes.NotesReceiver;
 
 
 public class MainFragment extends Fragment implements RVClickListener {

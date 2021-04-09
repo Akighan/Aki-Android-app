@@ -1,4 +1,4 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.fragments;
 
 import android.os.Bundle;
 
@@ -15,19 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.github.akighan.aki.database.NotesReceiver;
-import com.github.akighan.aki.server.LaptopServer;
+import com.github.akighan.aki.R;
+import com.github.akighan.aki.notes.NotesReceiver;
 
 
 public class AddNewNoteFragment extends Fragment {
 
     NotesReceiver notesReceiver;
-    LaptopServer server = new LaptopServer();
-
-    public AddNewNoteFragment() {
-        // Required empty public constructor
-    }
-
 
     public static AddNewNoteFragment newInstance() {
         AddNewNoteFragment fragment = new AddNewNoteFragment();
@@ -46,7 +40,6 @@ public class AddNewNoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_add_new_note, container, false);
     }
@@ -57,9 +50,9 @@ public class AddNewNoteFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
         getView().clearFocus();
-        super.onStop();
+        super.onPause();
     }
 
     @Override
@@ -81,27 +74,5 @@ public class AddNewNoteFragment extends Fragment {
 
         }
         return true;
-//        int id = item.getItemId();
-//        if (id == R.id.menuPurchasesListNewRecord) {
-//            EditText editText = (EditText) getView().findViewById(R.id.pt_enter_new_note);
-//            editText.clearFocus();
-//            String enteredText = editText.getText().toString();
-//            if (!enteredText.equals("")) {
-//               notesReceiver.setNote(enteredText);
-//               new Thread(new Runnable() {
-//                   @Override
-//                   public void run() {
-//                       try {
-//                           server.sendData();
-//                           server.closeConnection();
-//                       } catch (Exception e) {
-//                           e.printStackTrace();
-//                       }
-//                   }
-//               }).start();
-//            }
-//            NavHostFragment.findNavController(AddNewNoteFragment.this).navigate(R.id.action_newNoteFragment_to_mainFragment);
-//        }
-//        return true;
     }
 }

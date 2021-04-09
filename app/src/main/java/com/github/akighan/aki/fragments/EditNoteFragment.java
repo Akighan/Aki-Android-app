@@ -1,4 +1,4 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.github.akighan.aki.database.NotesReceiver;
-import com.github.akighan.aki.server.LaptopServer;
+import com.github.akighan.aki.notes.Note;
+import com.github.akighan.aki.R;
+import com.github.akighan.aki.notes.NotesReceiver;
 
 public class EditNoteFragment extends Fragment {
     private int position;

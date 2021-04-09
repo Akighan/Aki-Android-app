@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.github.akighan.aki.MainFragment"
+        android:name="com.github.akighan.aki.fragments.MainFragment"
         android:label="Мои заметки"
         tools:layout="@layout/fragment_main">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
-        android:name="com.github.akighan.aki.AddNewNoteFragment"
+        android:name="com.github.akighan.aki.fragments.AddNewNoteFragment"
         android:label="Добавить заметку"
         tools:layout="@layout/fragment_add_new_note" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.github.akighan.aki.SettingsFragment"
+        android:name="com.github.akighan.aki.fragments.SettingsFragment"
         android:label="Настройки"
         tools:layout="@layout/fragment_settings" >
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/editNoteFragment"
-        android:name="com.github.akighan.aki.EditNoteFragment"
+        android:name="com.github.akighan.aki.fragments.EditNoteFragment"
         android:label="Изменить заметку"
         tools:layout="@layout/fragment_edit_note">
         <action
