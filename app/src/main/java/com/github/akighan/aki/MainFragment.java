@@ -2,7 +2,9 @@ package com.github.akighan.aki;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaRouter;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,7 +30,6 @@ import com.github.akighan.aki.server.LaptopServer;
 
 public class MainFragment extends Fragment implements RVClickListener {
     NotesReceiver notesReceiver = NotesReceiver.getInstance();
-    LaptopServer server = new LaptopServer();
 
 
     public MainFragment() {

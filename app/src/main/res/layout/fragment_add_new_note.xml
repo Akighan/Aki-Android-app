@@ -6,14 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".AddNewNoteFragment">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/main_background" />
+
     <EditText
         android:id="@+id/pt_enter_new_note"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:alpha="0.7"
+        android:background="@color/menuTitleTextColor"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:lines="20"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

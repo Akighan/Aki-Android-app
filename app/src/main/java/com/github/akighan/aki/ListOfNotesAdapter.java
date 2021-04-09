@@ -37,21 +37,15 @@ public class ListOfNotesAdapter
         List<Note> notes = notesReceiver.getNotes();
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
-                //Collections.swap(notesReceiver.getNotes(), i, i + 1);
-                Note note = notes.remove(fromPosition);
-                notes.add(toPosition,note);
+                Collections.swap(notes, i, i + 1);
 
             }
         } else {
             for (int i = fromPosition; i > toPosition; i--) {
-                //Collections.swap(notesReceiver.getNotes(), i, i - 1);
-                Note note = notes.remove(toPosition);
-                notes.add(fromPosition,note);
+                Collections.swap(notes, i, i - 1);
             }
         }
-
         notifyItemMoved(fromPosition, toPosition);
-        notesReceiver.updateDBFromReceiver();
     }
 
     @Override
@@ -82,14 +76,14 @@ public class ListOfNotesAdapter
         holder.note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List <Note> notes = notesReceiver.getNotes();
-                int positionOfElement = -1;
-                for (int i =0; i<notes.size();i++) {
-                    if (notes.get(i).getNote().equals(note.getNote())) {
-                        positionOfElement = i;
-                    }
-                }
-                rvClickListener.onClick(positionOfElement);
+//                List <Note> notes = notesReceiver.getNotes();
+//                int positionOfElement = -1;
+//                for (int i =0; i<notes.size();i++) {
+//                    if (notes.get(i).getNote().equals(note.getNote())) {
+//                        positionOfElement = i;
+//                    }
+//                }
+                rvClickListener.onClick(holder.getAdapterPosition());
             }
         });
     }

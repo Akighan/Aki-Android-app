@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.github.akighan.aki.database.NotesReceiver;
 import com.github.akighan.aki.server.LaptopServer;
@@ -71,27 +70,38 @@ public class AddNewNoteFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menuPurchasesListNewRecord) {
+        int clickedItem = item.getItemId();
+        if (clickedItem == R.id.add_new_note_menu_button) {
             EditText editText = (EditText) getView().findViewById(R.id.pt_enter_new_note);
-            editText.clearFocus();
-            String enteredText = editText.getText().toString();
+            String enteredText = editText.getText().toString().trim();
             if (!enteredText.equals("")) {
-               notesReceiver.setNote(enteredText);
-               new Thread(new Runnable() {
-                   @Override
-                   public void run() {
-                       try {
-                           server.sendData();
-                           server.closeConnection();
-                       } catch (Exception e) {
-                           e.printStackTrace();
-                       }
-                   }
-               }).start();
+                notesReceiver.setNote(enteredText);
             }
             NavHostFragment.findNavController(AddNewNoteFragment.this).navigate(R.id.action_newNoteFragment_to_mainFragment);
+
         }
         return true;
+//        int id = item.getItemId();
+//        if (id == R.id.menuPurchasesListNewRecord) {
+//            EditText editText = (EditText) getView().findViewById(R.id.pt_enter_new_note);
+//            editText.clearFocus();
+//            String enteredText = editText.getText().toString();
+//            if (!enteredText.equals("")) {
+//               notesReceiver.setNote(enteredText);
+//               new Thread(new Runnable() {
+//                   @Override
+//                   public void run() {
+//                       try {
+//                           server.sendData();
+//                           server.closeConnection();
+//                       } catch (Exception e) {
+//                           e.printStackTrace();
+//                       }
+//                   }
+//               }).start();
+//            }
+//            NavHostFragment.findNavController(AddNewNoteFragment.this).navigate(R.id.action_newNoteFragment_to_mainFragment);
+//        }
+//        return true;
     }
 }
