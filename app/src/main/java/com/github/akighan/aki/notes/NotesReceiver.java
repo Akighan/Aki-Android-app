@@ -11,14 +11,14 @@ public class NotesReceiver{
     private static NotesReceiver notesReceiver;
     private List<Note> notes;
     private final AppDatabase appDatabase;
-    private boolean isChanged;
+    private boolean isNeedToSynchroniseWithServer;
 
 
     private NotesReceiver() {
         appDatabase = DBSingleton.getInstance().getDatabase();
         notes = new ArrayList<>();
         fillCollectionFromDatabase();
-        isChanged = false;
+        isNeedToSynchroniseWithServer = false;
     }
 
 
@@ -54,17 +54,17 @@ public class NotesReceiver{
 
     public void setNote(String text) {
         notes.add(new Note(text));
-        isChanged = true;
+        isNeedToSynchroniseWithServer = true;
     }
 
     public void updateNote (int position, Note note) {
         notes.set(position,note);
-        isChanged = true;
+        isNeedToSynchroniseWithServer = true;
     }
 
     public void remove(int position) {
         notes.remove(position);
-        isChanged = true;
+        isNeedToSynchroniseWithServer = true;
     }
 
     public List <Note> getNotes () throws NullPointerException {
@@ -83,11 +83,11 @@ public class NotesReceiver{
         }).start();
     }
 
-    public boolean isChanged () {
-        return isChanged;
+    public boolean isNeedToSynchroniseWithServer() {
+        return isNeedToSynchroniseWithServer;
     }
 
-    public void notesSentToServer () {
-        isChanged = false;
+    public void setNeedToSynchroniseWithServer(boolean needToSynchroniseWithServer) {
+        isNeedToSynchroniseWithServer = needToSynchroniseWithServer;
     }
 }

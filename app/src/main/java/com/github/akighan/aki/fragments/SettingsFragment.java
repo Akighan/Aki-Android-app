@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.akighan.aki.R;
+import com.github.akighan.aki.notes.NotesReceiver;
 import com.github.akighan.aki.server.LaptopServer;
 
 
@@ -119,9 +120,16 @@ public class SettingsFragment extends Fragment {
     private void savePreferences() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(APP_TELEGRAM_ASSISTANT, telegramOnSwitch.isChecked())
-                .putBoolean(APP_WEATHER_NOTIFICATION, weatherNotification.isChecked())
-                .putInt(APP_CITY_FOR_WEATHER, citySpinner.getSelectedItemPosition())
-                .putBoolean(APP_NEWS_NOTIFICATION, newsNotification.isChecked()).apply();
+                .putBoolean(APP_NEWS_NOTIFICATION, newsNotification.isChecked())
+                .putInt(APP_CITY_FOR_WEATHER, citySpinner.getSelectedItemPosition());;
+
+        if (citySpinner.getSelectedItemPosition() == 0) {
+            editor.putBoolean(APP_WEATHER_NOTIFICATION, false);
+        } else{
+            editor.putBoolean(APP_WEATHER_NOTIFICATION, weatherNotification.isChecked());
+        }
+        editor.apply();
+
         LaptopServer laptopServer = new LaptopServer(getActivity());
 
         try {
@@ -155,6 +163,8 @@ public class SettingsFragment extends Fragment {
             sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 activateSaveButton();
                 if (isChecked) {
+                    NotesReceiver.getInstance().setNeedToSynchroniseWithServer(true);
+
                     newsNotificationContainer.setVisibility(View.VISIBLE);
                     weatherNotificationContainer.setVisibility(View.VISIBLE);
                     if (weatherNotification.isChecked()) {
@@ -192,7 +202,7 @@ public class SettingsFragment extends Fragment {
         isTelegramChecked = sharedPreferences.getBoolean(APP_TELEGRAM_ASSISTANT, false);
         telegramOnSwitch.setChecked(isTelegramChecked);
         if (isTelegramChecked) {
-            isNewsNotificationChecked = sharedPreferences.getBoolean(APP_NEWS_NOTIFICATION,false);
+            isNewsNotificationChecked = sharedPreferences.getBoolean(APP_NEWS_NOTIFICATION, false);
             newsNotification.setChecked(isNewsNotificationChecked);
             newsNotificationContainer.setVisibility(View.VISIBLE);
 

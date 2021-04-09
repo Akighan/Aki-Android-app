@@ -25,11 +25,11 @@ public class OnTimeNotesSender extends TimerTask {
     public void run() {
         boolean isTelegramChecked = sharedPreferences.getBoolean(SettingsFragment.APP_TELEGRAM_ASSISTANT, false);
         System.out.println("i was created");
-        if (isTelegramChecked && notesReceiver.isChanged()) {
+        if (isTelegramChecked && notesReceiver.isNeedToSynchroniseWithServer()) {
             System.out.println("i'm in");
             try {
                 laptopServer.sendData();
-                notesReceiver.notesSentToServer();
+                notesReceiver.setNeedToSynchroniseWithServer(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

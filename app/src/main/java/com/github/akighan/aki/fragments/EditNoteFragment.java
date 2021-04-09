@@ -55,7 +55,8 @@ public class EditNoteFragment extends Fragment {
     }
 
     @Override
-    public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        super.onPrepareOptionsMenu(menu);
+    public void onPause() {
+        getView().clearFocus();
+        super.onPause();
     }
 }
