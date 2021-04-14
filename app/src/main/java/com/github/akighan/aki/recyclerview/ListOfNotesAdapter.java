@@ -1,17 +1,18 @@
-package com.github.akighan.aki.notes;
+package com.github.akighan.aki.recyclerview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.akighan.aki.R;
-import com.github.akighan.aki.recyclerview.RVClickListener;
-import com.github.akighan.aki.recyclerview.RecyclerViewTouch;
+import com.github.akighan.aki.notes.Note;
+import com.github.akighan.aki.notes.NotesReceiver;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,7 @@ public class ListOfNotesAdapter
     private final LayoutInflater inflater;
     private final NotesReceiver notesReceiver;
     private final RVClickListener rvClickListener;
+    private View view;
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
@@ -55,7 +57,7 @@ public class ListOfNotesAdapter
     @NonNull
     @Override
     public ListOfNotesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.rv_list_of_notes, parent, false);
+        view = inflater.inflate(R.layout.rv_list_of_notes, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -64,8 +66,11 @@ public class ListOfNotesAdapter
     public void onBindViewHolder(@NonNull ListOfNotesAdapter.ViewHolder holder, int position) {
         Note note = notesReceiver.get(position);
         holder.note.setText(note.getNote());
-
-        holder.note.setOnClickListener(v -> rvClickListener.onClick(holder.getAdapterPosition()));
+        LinearLayout linearLayout = view.findViewById(R.id.rv_linearLayout);
+        linearLayout.setOnClickListener((v) -> {
+            rvClickListener.onClick(holder.getAdapterPosition());
+        });
+        //holder.note.setOnClickListener(v -> rvClickListener.onClick(holder.getAdapterPosition()));
     }
 
 

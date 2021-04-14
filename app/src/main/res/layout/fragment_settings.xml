@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SettingsFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/main_background" />
-
     <TextView
         android:id="@+id/welcome_text"
         android:layout_width="match_parent"
