@@ -2,4 +2,5 @@
 <resources>
     <dimen name="menu_height">56dp</dimen>
     <dimen name="settings_item_width">292dp</dimen>
+    <dimen name="text_background_alpha">1</dimen>
 </resources>

@@ -2,7 +2,7 @@ package com.github.akighan.aki.database;
 
 import androidx.room.*;
 
-import com.github.akighan.aki.Note;
+import com.github.akighan.aki.notes.Note;
 
 import java.util.List;
 

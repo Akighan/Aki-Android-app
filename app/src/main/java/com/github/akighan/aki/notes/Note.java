@@ -1,4 +1,4 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.notes;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

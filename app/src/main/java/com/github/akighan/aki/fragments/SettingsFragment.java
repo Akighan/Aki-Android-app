@@ -1,4 +1,4 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.github.akighan.aki.R;
+import com.github.akighan.aki.notes.NotesReceiver;
 import com.github.akighan.aki.server.LaptopServer;
 
 
@@ -67,17 +70,7 @@ public class SettingsFragment extends Fragment {
         saveButton = view.findViewById(R.id.bt_save_changes);
         welcomeButton = view.findViewById(R.id.bt_equaint_with_telegram);
 
-
-
         loadPreferences();
-
-        if (!isClientThereFirstTime) {
-            TextView welcomeText = view.findViewById(R.id.welcome_text);
-            LinearLayout telegramNotificationLayout = view.findViewById(R.id.telegram_notification_layout);
-            welcomeButton.setVisibility(View.INVISIBLE);
-            welcomeText.setVisibility(View.INVISIBLE);
-            telegramNotificationLayout.setVisibility(View.VISIBLE);
-        }
 
         onClickListener(welcomeButton);
         onClickListener(saveButton);
@@ -90,6 +83,19 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        loadPreferences();
+        if (!isClientThereFirstTime) {
+            TextView welcomeText = this.getView().findViewById(R.id.welcome_text);
+            LinearLayout telegramNotificationLayout = this.getView().findViewById(R.id.telegram_notification_layout);
+            welcomeButton.setVisibility(View.GONE);
+            welcomeText.setVisibility(View.GONE);
+            telegramNotificationLayout.setVisibility(View.VISIBLE);
+        }
+        super.onResume();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
@@ -97,7 +103,7 @@ public class SettingsFragment extends Fragment {
     private void onClickListener(Button button) {
         if (button.getId() == saveButton.getId()) {
             saveButton.setOnClickListener(view -> {
-                new Thread(() -> savePreferences(ANDROID_ID)).start();
+                new Thread(this::savePreferences).start();
                 NavHostFragment.findNavController(this).navigate(R.id.action_settingsFragment_to_mainFragment);
             });
         } else if (button.getId() == welcomeButton.getId()) {
@@ -110,16 +116,23 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-    private void savePreferences(String clientId) {
+    private void savePreferences() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(APP_TELEGRAM_ASSISTANT, telegramOnSwitch.isChecked())
-                .putBoolean(APP_WEATHER_NOTIFICATION, weatherNotification.isChecked())
-                .putInt(APP_CITY_FOR_WEATHER, citySpinner.getSelectedItemPosition())
-                .putBoolean(APP_NEWS_NOTIFICATION, newsNotification.isChecked()).apply();
-        LaptopServer laptopServer = new LaptopServer();
+                .putBoolean(APP_NEWS_NOTIFICATION, newsNotification.isChecked())
+                .putInt(APP_CITY_FOR_WEATHER, citySpinner.getSelectedItemPosition());;
+
+        if (citySpinner.getSelectedItemPosition() == 0) {
+            editor.putBoolean(APP_WEATHER_NOTIFICATION, false);
+        } else{
+            editor.putBoolean(APP_WEATHER_NOTIFICATION, weatherNotification.isChecked());
+        }
+        editor.apply();
+
+        LaptopServer laptopServer = new LaptopServer(getActivity());
 
         try {
-            laptopServer.sendSettings(clientId, sharedPreferences);
+            laptopServer.sendSettings(sharedPreferences);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -149,6 +162,8 @@ public class SettingsFragment extends Fragment {
             sw.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 activateSaveButton();
                 if (isChecked) {
+                    NotesReceiver.getInstance().setNeedToSynchroniseWithServer(true);
+
                     newsNotificationContainer.setVisibility(View.VISIBLE);
                     weatherNotificationContainer.setVisibility(View.VISIBLE);
                     if (weatherNotification.isChecked()) {
@@ -186,7 +201,7 @@ public class SettingsFragment extends Fragment {
         isTelegramChecked = sharedPreferences.getBoolean(APP_TELEGRAM_ASSISTANT, false);
         telegramOnSwitch.setChecked(isTelegramChecked);
         if (isTelegramChecked) {
-            isNewsNotificationChecked = sharedPreferences.getBoolean(APP_NEWS_NOTIFICATION,false);
+            isNewsNotificationChecked = sharedPreferences.getBoolean(APP_NEWS_NOTIFICATION, false);
             newsNotification.setChecked(isNewsNotificationChecked);
             newsNotificationContainer.setVisibility(View.VISIBLE);
 

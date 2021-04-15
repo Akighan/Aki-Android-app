@@ -1,4 +1,4 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.recyclerview;
 
 public interface RecyclerViewTouch {
     void onItemMove (int fromPosition, int toPosition);

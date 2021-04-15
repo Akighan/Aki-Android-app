@@ -6,14 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="false"
-    tools:context=".MainFragment">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/main_background" />
+    tools:context=".fragments.MainFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notes"
@@ -23,14 +16,26 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/rv_list_of_notes" />
 
-    <ImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/iv_plus_button"
-        android:layout_width="84dp"
-        android:layout_height="76dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:alpha="0.9"
+        app:backgroundTint="@android:color/transparent"
+        app:backgroundTintMode="multiply"
+        app:fabSize="normal"
+        app:maxImageSize="64dp"
         app:srcCompat="@drawable/ic_plus_button"
         app:tint="@color/addNoteIcon" />
 
+    <View
+        android:id="@+id/circle"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:background="@drawable/circle"
+        android:visibility="invisible" />
 </FrameLayout>

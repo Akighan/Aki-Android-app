@@ -1,4 +1,4 @@
-package com.github.akighan.aki;
+package com.github.akighan.aki.recyclerview;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
