@@ -54,39 +54,15 @@ public class MainFragment extends Fragment implements RVClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.iv_plus_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View circle = view.findViewById(R.id.circle);
-                Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.circle_explosion_anim);
-                animation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        circle.setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.iv_plus_button).setVisibility(View.INVISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        circle.setScaleY(40);
-                        circle.setScaleX(40);
-                        NavHostFragment.findNavController(MainFragment.this).navigate(R.id.action_mainFragment_to_addNewNoteFragment);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-                circle.startAnimation(animation);
-            }
-        });
+        view.findViewById(R.id.iv_plus_button)
+                .setOnClickListener(v -> NavHostFragment.findNavController(MainFragment.this)
+                        .navigate(R.id.action_mainFragment_to_addNewNoteFragment));
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.top_right_menu, menu);
-        super.onCreateOptionsMenu(menu,menuInflater);
+        super.onCreateOptionsMenu(menu, menuInflater);
     }
 
     @Override

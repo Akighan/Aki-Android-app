@@ -23,19 +23,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:alpha="0.9"
-        app:backgroundTint="@android:color/transparent"
-        app:backgroundTintMode="multiply"
         app:fabSize="normal"
         app:maxImageSize="64dp"
-        app:srcCompat="@drawable/ic_plus_button"
-        app:tint="@color/addNoteIcon" />
-
-    <View
-        android:id="@+id/circle"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
-        android:background="@drawable/circle"
-        android:visibility="invisible" />
+        app:srcCompat="@drawable/ic_plus_button" />
 </FrameLayout>
