@@ -84,7 +84,6 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public void onResume() {
-        Toast.makeText(getContext(), "I'm here", Toast.LENGTH_SHORT).show();
         loadPreferences();
         if (!isClientThereFirstTime) {
             TextView welcomeText = this.getView().findViewById(R.id.welcome_text);

@@ -28,7 +28,7 @@
         app:fabSize="normal"
         app:maxImageSize="64dp"
         app:srcCompat="@drawable/ic_plus_button"
-        app:tint="@color/white" />
+        app:tint="@color/addNoteIcon" />
 
     <View
         android:id="@+id/circle"
