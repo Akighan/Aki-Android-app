@@ -21,7 +21,7 @@ import static com.github.akighan.aki.fragments.SettingsFragment.APP_WEATHER_NOTI
 
 public class LaptopServer {
     private static final String LOG_TAG = "Aki";
-    private String mServerName = "192.168.1.44";
+    private String mServerName = "192.168.1.54";
     private int mServerPort = 6789;
     private Socket mSocket = null;
     private final String ANDROID_ID;
